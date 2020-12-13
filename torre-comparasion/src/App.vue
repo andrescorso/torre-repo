@@ -1,10 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="blue-grey darken-4"
-      dark
-    >
+    <v-app-bar app dark>
       <div class="d-flex align-center">
         <v-img
           alt="Logo"
@@ -19,7 +15,7 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/"
+        href="https://github.com/andrescorso/torre-repo"
         target="_blank"
         text
       >
@@ -29,19 +25,20 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <SearchBars/>
+      <v-divider/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import SearchBars from './components/SearchBars'
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    SearchBars,
   },
 
   data: () => ({
