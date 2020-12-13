@@ -25,20 +25,24 @@
     </v-app-bar>
 
     <v-main>
-      <SearchBars/>
+      <SearchAll/>
       <v-divider/>
+      <CompareAll/>
+
     </v-main>
   </v-app>
 </template>
 
 <script>
-import SearchBars from './components/SearchBars'
+import SearchAll from './components/SearchAll'
+import CompareAll from './components/CompareAll'
 
 export default {
   name: 'App',
 
   components: {
-    SearchBars,
+    SearchAll,
+    CompareAll,
   },
 
   data: () => ({

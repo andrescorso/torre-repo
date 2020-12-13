@@ -1,5 +1,5 @@
 <template>
-  <v-card dark cols="12" sm="8" md="2">
+  <v-card dark>
     <v-card-title class="headline lime darken-2">
       Search for Job offers
     </v-card-title>
@@ -9,7 +9,7 @@
         v-model="organization"
         :loading="isLoading"
         label="Organization"
-        placeholder="Search the job you offer"
+        placeholder="Search the company which is offering the job"
         clearable
         outlined
       ></v-text-field>
@@ -22,7 +22,33 @@
         item-value="id"
         item-text="Description"
         outlined
-      ></v-autocomplete>
+      >
+        <!--
+        <template v-slot:selection="data">
+          <v-chip
+            v-bind="data.attrs"
+            :input-value="data.selected"
+            close
+            @click="data.select"
+            @click:close="remove(data.item)"
+          >
+            <v-avatar left>
+              <v-img :src="data.item.orgImage"></v-img>
+            </v-avatar>
+            {{ data.item.name }}
+          </v-chip>
+        </template>
+        -->
+        <template v-slot:item="data">
+          <v-list-item-avatar>
+            <v-img :src="data.item.orgImage"></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title v-html="data.item.Description">
+            </v-list-item-title>
+          </v-list-item-content>
+        </template>
+      </v-autocomplete>
     </v-card-text>
   </v-card>
 </template>
@@ -31,7 +57,7 @@
 import { Global } from "../Config";
 import _ from "lodash";
 export default {
-  name: "OportunitySearch",
+  name: "SearchOportunity",
   created() {
     this.debouncedGetOpportunity = _.debounce(this.getOpportunities, 800);
   },
@@ -44,6 +70,7 @@ export default {
     opportunity: null,
     organization: null,
     searchFinish: false,
+    skills: [],
   }),
   computed: {
     items() {
@@ -53,9 +80,11 @@ export default {
             ? entry.objective.slice(0, this.descriptionLimit) + "..."
             : entry.objective;
 
-        const id = entry.id
+        const id = entry.id;
 
-        return Object.assign({}, entry, { Description, id });
+        const orgImage = entry.organizations[0].picture;
+
+        return Object.assign({}, entry, { Description, id, orgImage });
       });
     },
   },
@@ -69,8 +98,11 @@ export default {
       }
       this.debouncedGetOpportunity();
     },
-    opportunity: function(val){
-      console.log(val)
+    opportunity: function(val) {
+      this.skills = this.results.results.filter(function(e) {
+        return e.id == val;
+      })[0].skills;
+      this.$root.$emit(Global.Events.opportunityChange, val, this.skills)
     },
   },
   methods: {
@@ -83,7 +115,7 @@ export default {
 
       if (this.company != null) {
         // Lazily load input items
-        fetch(Global.searchAPI, requestOptions)
+        fetch(Global.API.searchOppAPI, requestOptions)
           .then((res) => res.json())
           .then((res) => {
             this.results = JSON.parse(JSON.stringify(res));
@@ -91,7 +123,6 @@ export default {
             this.count = res.size;
             this.isLoading = false;
             this.searchFinish = true;
-            console.log(this.results)
           })
           .catch((err) => {
             console.log(err);
