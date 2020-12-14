@@ -1,6 +1,6 @@
 <template>
   <v-card dark>
-    <v-card-title class="headline lime darken-2">
+    <v-card-title :class="opportunityClass">
       Search for Job offers
     </v-card-title>
     <v-divider></v-divider>
@@ -23,22 +23,6 @@
         item-text="Description"
         outlined
       >
-        <!--
-        <template v-slot:selection="data">
-          <v-chip
-            v-bind="data.attrs"
-            :input-value="data.selected"
-            close
-            @click="data.select"
-            @click:close="remove(data.item)"
-          >
-            <v-avatar left>
-              <v-img :src="data.item.orgImage"></v-img>
-            </v-avatar>
-            {{ data.item.name }}
-          </v-chip>
-        </template>
-        -->
         <template v-slot:item="data">
           <v-list-item-avatar>
             <v-img :src="data.item.orgImage"></v-img>
@@ -60,13 +44,14 @@ export default {
   name: "SearchOportunity",
   created() {
     this.debouncedGetOpportunity = _.debounce(this.getOpportunities, 800);
+    this.opportunityClass = "headline " + Global.Colors.OpportunityCard;
   },
   mounted() {},
   data: () => ({
     descriptionLimit: 60,
     entries: [],
     isLoading: false,
-    company: null,
+    company: "",
     opportunity: null,
     organization: null,
     searchFinish: false,
@@ -99,10 +84,14 @@ export default {
       this.debouncedGetOpportunity();
     },
     opportunity: function(val) {
-      this.skills = this.results.results.filter(function(e) {
-        return e.id == val;
-      })[0].skills;
-      this.$root.$emit(Global.Events.opportunityChange, val, this.skills)
+      if (val != null) {
+        this.skills = this.results.results.filter(function(e) {
+          return e.id == val;
+        })[0].skills;
+        this.$root.$emit(Global.Events.opportunityChange, val, this.skills);
+      } else {
+        this.$root.$emit(Global.Events.opportunityChange, "", null);
+      }
     },
   },
   methods: {
@@ -113,7 +102,8 @@ export default {
         body: JSON.stringify({ organization: { term: this.company } }),
       };
 
-      if (this.company != null) {
+      this.opportunity = null;
+      if (this.company != "" && this.company != null) {
         // Lazily load input items
         fetch(Global.API.searchOppAPI, requestOptions)
           .then((res) => res.json())

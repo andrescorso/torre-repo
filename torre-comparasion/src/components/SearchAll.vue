@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12" md="4">
-        <SearchOpportunity/>
+        <SearchOpportunity />
       </v-col>
       <v-col cols="12" md="4">
         <SearchCandidate
@@ -23,6 +23,7 @@
 <script>
 import SearchOpportunity from "./SearchOpportunity";
 import SearchCandidate from "./SearchCandidate";
+import { Global } from "../Config";
 export default {
   name: "SearchAll",
   components: {
@@ -30,8 +31,8 @@ export default {
     SearchCandidate,
   },
   data: () => ({
-    candidateColor1: "deep-orange lighten-1",
-    candidateColor2: "blue lighten-2",
+    candidateColor1: Global.Colors.Candidate1Card,
+    candidateColor2: Global.Colors.Candidate2Card,
   }),
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-card dark>
-    <v-card-title :class="candidateTitle">
+    <v-card-title :class="candidateClass">
       Search for Candidate
     </v-card-title>
     <v-divider></v-divider>
@@ -68,7 +68,7 @@ export default {
   created() {
     this.debouncedGetCandidate = _.debounce(this.getCandidates, 800);
     this.candidateLabel = "Candidate " + this.candidateNumber;
-    this.candidateTitle = "headline " + this.candidateColor;
+    this.candidateClass = "headline " + this.candidateColor;
   },
   mounted() {},
   data: () => ({
@@ -118,7 +118,7 @@ export default {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: { term: this.candidateName } }),
       };
-
+      this.candidates = ""
       if (this.candidateName != null) {
         // Lazily load input items
         fetch(Global.API.searchUsersAPI, requestOptions)
