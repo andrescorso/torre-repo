@@ -133,11 +133,11 @@ export default {
         if (interests.length > 0) {
           // Skill with experience that match with candidate interests
           this.partial = this.experience.filter(function(e) {
-            return interests.includes(e.name);
+            return interests.includes(e.name) && !strenghts.includes(e.name);
           });
           // Skill without experience that match with candidate interests
           this.learning = this.develop.filter(function(e) {
-            return interests.includes(e.name);
+            return interests.includes(e.name) && !strenghts.includes(e.name);
           });
         } else {
           this.partial = null;

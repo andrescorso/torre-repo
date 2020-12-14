@@ -12,8 +12,8 @@ export const Global = {
   },
   Colors: {
     OpportunityCard: 'lime darken-2',
-    Candidate1Card: 'deep-orange lighten-1',
-    Candidate2Card: 'blue lighten-2',
+    Candidate1Card: 'purple darken-1',
+    Candidate2Card: 'brown darken-1',
     SkillsCard: 'blue-grey darken-1'
   }
 }
