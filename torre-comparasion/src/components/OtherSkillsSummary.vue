@@ -7,10 +7,10 @@
       <v-divider></v-divider>
       <v-card-text>
         <v-alert dense icon="mdi-briefcase-outline" type="success">
-          # Strengths :{{ strenghts1 }}
+          # Strengths: {{ strenghts1 }}
         </v-alert>
         <v-alert dense type="info" icon="mdi-school-outline">
-          # Interests :{{ interests1 }}
+          # Interests: {{ interests1 }}
         </v-alert>
       </v-card-text>
     </v-card>

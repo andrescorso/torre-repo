@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     emitInfo: function(candidateNumber, info) {
-        console.log(info)
       this.$root.$emit(Global.Events.candidateInfo + candidateNumber, info);
     },
   },

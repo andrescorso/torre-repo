@@ -52,16 +52,16 @@ export default {
         this.infoReady1 = false;
       } else {
         this.infoReady1 = true;
-        this.compareSkills();
       }
+      this.compareSkills();
     });
     this.$root.$on(Global.Events.candidateInfo + "2", (result) => {
       if (result == null) {
         this.infoReady2 = false;
       } else {
         this.infoReady2 = true;
-        this.compareSkills();
       }
+      this.compareSkills();
     });
   },
   data: () => ({
