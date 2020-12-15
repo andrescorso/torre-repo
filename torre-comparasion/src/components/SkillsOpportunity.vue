@@ -53,7 +53,7 @@ export default {
   }),
   created() {
     this.cardClass = "headline " + Global.Colors.OpportunityCard;
-    this.color = Global.Colors.SkillsCard;
+    this.color = Global.Colors.SkillsAlert;
   },
   watch: {
     skills: function() {

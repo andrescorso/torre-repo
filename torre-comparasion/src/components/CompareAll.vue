@@ -2,16 +2,19 @@
   <div>
     <CompareSkills />
     <v-divider />
+    <CompareOtherSkills />
   </div>
 </template>
 
 <script>
 import CompareSkills from "./CompareSkills";
+import CompareOtherSkills from "./CompareOtherSkills";
 import { Global } from "../Config";
 export default {
   name: "CompareAll",
   components: {
     CompareSkills,
+    CompareOtherSkills
   },
   mounted() {
     this.$root.$on(
